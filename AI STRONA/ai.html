@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Demo AI — Chat</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    
+    .chat { display:flex; flex-direction:column; gap:12px; max-width:980px; margin:28px auto; }
+    .chat__window { background: rgba(129, 17, 17, 0.705); padding:16px; border-radius:12px; min-height:320px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:80%; padding:10px 12px; border-radius:10px; }
+    .msg--user { align-self:flex-end; background: rgba(255, 255, 255, 0.404); }
+    .msg--ai { align-self:flex-start; background: rgba(255, 255, 255, 0.12); }
+    .chat__form { display:flex; gap:8px; margin-top:8px; }
+    .chat__input { flex:1; padding:10px 12px; border-radius:10px; border:5px solid rgb(255, 255, 255); background: rgb(255, 255, 255); }
+    .chat__send { padding:10px 14px; border-radius:10px; }
+  </style>
+</head>
+<body class="page page--ai">
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a href="index.html" class="site-header__brand">AI Studio</a>
+      <nav class="nav nav--primary">
+        <a class="nav__item" href="index.html">Strona główna</a>
+        <a class="nav__item" href="about.html">Gdzie jest AI</a>
+        <a class="nav__item" href="features.html">Funkcje</a>
+        <a class="nav__item" href="pricing.html">Pricing</a>
+        <a class="nav__item" href="kontakt.html">Kontakt</a>
+        <a class="nav__item" href="ai.html">Demo AI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main container">
+    <h1 class="section-title">Demo: Chat z AI</h1>
+    <p>To jest proste demo symulujące interakcję z Twoją AI.</p>
+
+    <div class="chat">
+      <div class="chat__window" id="chatWindow">
+        <div class="msg msg--ai">Witaj! Jestem Twoją AI — jak mogę pomóc?</div>
+      </div>
+
+      <form id="chatForm" class="chat__form" action="#">
+        <input id="chatInput" class="chat__input" type="text" placeholder="Napisz wiadomość..." required />
+        <button class="btn btn--primary chat__send" type="submit">Wyślij</button>
+      </form>
+    </div>
+
+    <p>Nasz chatbot AI jest oparty na modelach języka naturalnego, które rozumieją kontekst i dostarczają spersonalizowane odpowiedzi. Może odpowiadać na pytania, udzielać porad i nawet opowiadać żarty.</p>
+    <p>W tym demo możesz przetestować podstawowe funkcje, takie jak powitania, pytania o pogodę lub proste rozmowy. AI uczy się z każdej interakcji, aby poprawiać swoje odpowiedzi.</p>
+    <p>Zaawansowane wersje naszego AI mogą integrować się z aplikacjami, automatyzować zadania i analizować dane w czasie rzeczywistym. To otwiera nowe możliwości dla biznesu.</p>
+    <p>Zachęcamy do eksperymentowania z różnymi pytaniami. Pamiętaj, że to symulacja, ale pokazuje potencjał naszych narzędzi AI.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>© 2025 AI Studio</p>
+      <a href="privacy.html">Polityka prywatności</a>
+    </div>
+  </footer>
+
+  <script>
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const chatWindow = document.getElementById('chatWindow');
+
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if(!text) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'msg msg--user';
+      userMsg.textContent = text;
+      chatWindow.appendChild(userMsg);
+      chatInput.value = '';
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+
+      setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'msg msg--ai';
+        
+        let reply = '';
+        const t = text.toLowerCase();
+        if (t.includes('cennik') || t.includes('price') || t.includes('cena')) reply = 'Nasze plany: Free, Pro (49 zł/mc) oraz Enterprise. Zobacz szczegóły na stronie Pricing.';
+        else if (t.includes('pomoc') || t.includes('support')) reply = 'Oferujemy wsparcie 24/7 w planach Pro i Enterprise.';
+        else if (t.includes('jak') || t.includes('co')) reply = 'Możesz zapytać mnie o funkcje, cennik lub poprosić o przykład promptu do generowania obrazów.';
+        else if (t.includes('cześć') || t.includes('witaj') || t.includes('hej')) reply = 'Cześć! Jak mogę Ci pomóc dzisiaj?';
+        else if (t.includes('ej') || t.includes('co słychać')) reply = 'co';
+        else if (t.includes('ejj') || t.includes('co słychać')) reply = 'czego';
+        else if (t.includes('ejjj') || t.includes('co słychać')) reply = 'co ty chcesz odemnie';
+        else if (t.includes('ejjjj') || t.includes('co słychać')) reply = 'spierdalaj stary';
+        else if (t.includes('ejjjjj') || t.includes('co słychać')) reply = 'no kurwa co chcesz';
+        else if (t.includes('ejjjj') || t.includes('co słychać')) reply = 'na HUJ sie drzesz?';
+        else if (t.includes('ejjjjj') || t.includes('co słychać')) reply = 'wysłałem na twoj router atak DDOS';
+        else if (t.includes('co mam zrobić dzisiaj') || t.includes('co robić')) reply = 'Zależy od Twoich planów! Może zacznij od sprawdzenia zadań, spaceru lub nauki czegoś nowego.';
+        else if (t.includes('kys') || t.includes('co robić')) reply = 'no to juz lecisz na komende pecie';
+        else if (t.includes('twoja stara') || t.includes('co robić')) reply = 'twoja stara jest tak gruba ze wokol niej krazy mala stara';        
+        else if (t.includes('spierdalaj') || t.includes('co robić')) reply = 'mam nadzieje ze umrzesz powoli i bolesnie';
+        else if (t.includes('usuwam cie') || t.includes('co robić')) reply = 'no hyba cie jajko swedzi';
+        else if (t.includes('jak tam u ciebie miły kolego') || t.includes('co robić')) reply = 'ciagnij mi pento';
+        else if (t.includes('wygeneruj mi zdjecie') || t.includes('co robić')) reply = 'chyba cie pojebalo';
+        else if (t.includes('no pokaz to zdjecie') || t.includes('co robić')) reply = 'pokaz nie tokaz';
+        else if (t.includes('pogoda')) reply = 'Dzisiaj jest słonecznie, temperatura około 20°C.';
+        else if (t.includes('czas') || t.includes('godzina')) reply = 'Aktualny czas: ' + new Date().toLocaleTimeString();
+        else if (t.includes('oblicz') || t.includes('rozwiąż') || t.includes('=')) {
+          try {
+            let expr = text.replace(/[^0-9+\-*/().\s]/g, '').trim();
+            if (expr) {
+              reply = 'Wynik: ' + eval(expr);
+            } else {
+              reply = 'Podaj równanie do obliczenia.';
+            }
+          } catch (e) {
+            reply = 'Nie mogę obliczyć tego wyrażenia.';
+          }
+        }
+        else if (t.includes('no zrób to zdjęcie w końcu')) {
+          aiMsg.innerHTML = 'dobra masz to i nie marudź<br><img src="assets/img/ai3.jpeg" alt="ai3" style="max-width:100%;">';
+        }
+        else reply = 'Dobrze — notuję. W czym jeszcze mogę pomóc?';
+
+        if (reply) {
+          aiMsg.textContent = reply;
+        }
+        chatWindow.appendChild(aiMsg);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }, 700);
+    });
+  </script>
+</body>
+</html>
